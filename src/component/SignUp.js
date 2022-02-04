@@ -18,30 +18,54 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const [hiddenPassword, setHiddenPassword] = useState("true");
+  const [error, setError] = useState("null");
+  const [errorCheck, setErrorCheck] = useState("false");
 
-  const nameHandler = (e) => {
-    setName(e.currentTarget.value);
-  };
-  const emailHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  };
-
-  const passwordHandler = (e) => {
-    setPassword(e.currentTarget.value);
+  noError = e => {
+    this.setState({
+      errorCheck: false
+    });
   };
 
-  const checkPasswordHandler = (e) => {
-    setCheckPassword(e.currentTarget.value);
+  passwordCheck = () => this.state.password === this.state.checkPassword;
+  
+  showPassword = () => {
+    this.setState(prevState => ({ hiddenPassword: !prevState.hiddenPassword }));
   };
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (password !== checkPassword) {
-      return alert("Password is incorrect");
+
+  emailValid = () => {
+    if (this.state.email === ""){
+      return false;
     }
+    return true;
   };
+
+  handleState = name => e => {
+    this.setState({
+      [name]: e.target.value
+    });
+  }; 
+  
+  submitSignUp = e => {
+    e.preventDefault();
+    if (!this.passwordCheck()) {
+      this.setState({
+        errorCheck: true,
+        error: "You can sign up"
+      });
+    } 
+
+  const newUser = {
+    email: this.state.email,
+    password: this.state.password,
+    checkPassword: this.state.checkPassword
+  };
+  console.log("new user", newUser);
+};
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={() => this.submitSignUp}>
       <Container component="main" maxWidth="sm">
         <Box
           sx={{
