@@ -17,6 +17,7 @@ import {
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { LockOutlined } from "@mui/icons-material";
 
+<<<<<<< HEAD:src/components/Login.js
 const required = (value) => {
   if (!value) {
     return (
@@ -64,6 +65,61 @@ const Login = (props) => {
   }
   return (
     <form onSubmit={handleLogin}>
+=======
+export default function SignUp() {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+  const [hiddenPassword, setHiddenPassword] = useState("true");
+  const [error, setError] = useState("null");
+  const [errorCheck, setErrorCheck] = useState("false");
+
+  noError = e => {
+    this.setState({
+      errorCheck: false
+    });
+  };
+
+  passwordCheck = () => this.state.password === this.state.checkPassword;
+  
+  showPassword = () => {
+    this.setState(prevState => ({ hiddenPassword: !prevState.hiddenPassword }));
+  };
+
+  emailValid = () => {
+    if (this.state.email === ""){
+      return false;
+    }
+    return true;
+  };
+
+  handleState = name => e => {
+    this.setState({
+      [name]: e.target.value
+    });
+  }; 
+  
+  submitSignUp = e => {
+    e.preventDefault();
+    if (!this.passwordCheck()) {
+      this.setState({
+        errorCheck: true,
+        error: "You can sign up"
+      });
+    } 
+
+  const newUser = {
+    email: this.state.email,
+    password: this.state.password,
+    checkPassword: this.state.checkPassword
+  };
+  console.log("new user", newUser);
+};
+
+  return (
+    <form onSubmit={() => this.submitSignUp}>
+>>>>>>> 3cc3fbbc58c689df6f6db2bf58b87f3c2d3121fb:src/component/SignUp.js
       <Container component="main" maxWidth="sm">
         <Box
           sx={{
