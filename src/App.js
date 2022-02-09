@@ -6,13 +6,12 @@ import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice"
 
 
-
 const App = () => {
   const user = useSelector(selectUser);
 
   return (
   <div>
-    {<Login/>}
+    { user ? <Logout/> : <Login/>}
   </div>
   );
 };
