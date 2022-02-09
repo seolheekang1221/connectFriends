@@ -1,65 +1,24 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "../actions/auth";
-import { isEmail } from "validator";
-import { LockOutlined } from "@mui/icons-material";
+import { signUp } from './userSlice'
 import {
   Avatar,
   TextField,
-  Checkbox,
   Button,
-  Link,
   Box,
-  Grid,
   Typography,
   Container,
-  FormControlLabel,
 } from "@mui/material";
+import { LockOutlined } from "@mui/icons-material";
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className="alert" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
-const validEmail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert" role="alert">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
-const checkName = (value) => {
-  if (value.length < 3 || value.length > 20) {
-    return (
-      <div className="alert" role="alert">
-        The username must be between 3 and 20 characters.
-      </div>
-    );
-  }
-};
-const checkPassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
-
-export default function SignUp() {
+const SignUp = () => {
   const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { message } = useSelector(state => state.message);
-  const dispatch = useDispatch();
+  const [password, setPassword] = useState("");
+  
+  const user = useSelector(state => state.user.value)
+  const dispatch = useDispatch()
+
   const onChangeName = (e) => {
     const name = e.target.value;
     setName(name);
@@ -72,33 +31,35 @@ export default function SignUp() {
     const password = e.target.value;
     setPassword(password);
   };
-  const handleSignUp = (e) => {
-    e.preventDefault()
-    setLoading(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      signUp({
+      name: name,
+      email: email,
+      password: password,
+      signedIn: true,
+    })
+    );
   };
-//   if (!(error)) {
-//     dispatch(register(username, email, password))
-//       .then(() => {
-//         setSuccessful(true);
-//       })
-//       .catch(() => {
-//         setSuccessful(false);
-//       });
-//   }
-// };
 
   return (
-    <form onSubmit={handleSignUp}>
+    <div>
+    <form onSubmit={(e) => handleSubmit(e)}>
       <Container component="main" maxWidth="sm">
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 30,
+            width: 500,
+            height: 300,
+            justifyContent: "center",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 2, backgroundColor: "purple" }}>
+          <Avatar sx={{ m: 2, backgroundColor: "red" }}>
             <LockOutlined />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -106,7 +67,7 @@ export default function SignUp() {
           </Typography>
           <TextField
             margin="normal"
-            label="name"
+            label="User Name"
             required
             fullWidth
             name="name"
@@ -114,7 +75,6 @@ export default function SignUp() {
             autoFocus
             onChange={onChangeName}
             value={name}
-            validations={[required]}
           />
           <TextField
             margin="normal"
@@ -126,7 +86,6 @@ export default function SignUp() {
             autoFocus
             onChange={onChangeEmail}
             value={email}
-            validations={[required]}
           />
           <TextField
             margin="normal"
@@ -138,21 +97,21 @@ export default function SignUp() {
             autoComplete="password"
             onChange={onChangePassword}
             value={password}
-            validations={[required]}
           />
-  
           <Button
             type="submit"
+            color="primary"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            SignUp
           </Button>
-        
         </Box>
       </Container>
     </form>
+  </div>
   );
-}
+};
 
+export default SignUp;

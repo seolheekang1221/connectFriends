@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
+import Login from "./features/Login";
+import Logout from "./features/Logout";
+import SignUp from "./features/SignUp";
+import ForgotPassword from "./features/ForgotPassword";
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice"
+
+
 
 const App = () => {
-  return <div>
-    <Login />
-  </div>;
+  const user = useSelector(selectUser);
+
+  return (
+  <div>
+    {<Login/>}
+  </div>
+  );
 };
 
 export default App;
